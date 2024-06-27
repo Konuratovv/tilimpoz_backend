@@ -38,6 +38,14 @@ ALLOWED_HOSTS = []
 
 MY_APPS = [
     'apps.users',
+    'apps.rules',
+    'apps.etymology',
+    'apps.tilibizde',
+    'apps.documents',
+    'apps.books',
+    'apps.categories',
+    'apps.sozduk',
+    'apps.about',
 ]
 
 JAZZMIN = [

@@ -1,5 +1,5 @@
 asgiref==3.8.1
-Django==4.2
+Django>=4.2.9,<4.3
 django-cors-headers==4.4.0
 django-debug-toolbar==4.4.2
 django-dotenv==1.4.2
@@ -19,3 +19,4 @@ sqlparse==0.5.0
 style==1.1.0
 update==0.0.1
 uritemplate==4.1.1
+
