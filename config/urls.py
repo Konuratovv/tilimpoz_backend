@@ -28,4 +28,8 @@ urlpatterns = [
     path('api/categories/', include('apps.categories.urls')),
     path('api/sozduk/', include('apps.sozduk.urls')),
     path('api/about/', include('apps.about.urls')),
+    path('api/faq/', include('apps.faq.urls')),
+    path('api/qa/', include('apps.qa.urls')),
+    path('api/contacts/', include('apps.contacts.urls')),
+    path('api/team/', include('apps.team.urls')),
 ]
