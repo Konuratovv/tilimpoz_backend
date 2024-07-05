@@ -1,8 +1,8 @@
-# etymology/urls.py
-from django.urls import path
-from . import views
+from rest_framework.routers import DefaultRouter
+from .views import EtymologyViewSet
 
-urlpatterns = [
-    path('', views.EtymologyListCreateAPIView.as_view(), name='etymology-list-create'),
-]
+router = DefaultRouter()
+router.register(r'', EtymologyViewSet)
+
+urlpatterns = router.urls
 

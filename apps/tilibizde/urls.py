@@ -1,6 +1,7 @@
-from django.urls import path
-from . import views
+from rest_framework.routers import DefaultRouter
+from .views import TilibizdeViewSet
 
-urlpatterns = [
-    path('', views.TilibizdeListCreateAPIView.as_view(), name='tilibizde-list-create'),
-]
+router = DefaultRouter()
+router.register(r'', TilibizdeViewSet)
+
+urlpatterns = router.urls
