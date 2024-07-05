@@ -32,3 +32,8 @@ class VerifyEmailSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['code', 'email']
+
+class TopUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'points']
