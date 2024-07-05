@@ -1,7 +1,9 @@
-# about/urls.py
-from django.urls import path
-from . import views
+# apps/about/urls.py
+from rest_framework.routers import DefaultRouter
+from .views import AboutViewSet
 
-urlpatterns = [
-    path('', views.AboutListCreateAPIView.as_view(), name='about-list-create'),
-]
+router = DefaultRouter()
+router.register(r'', AboutViewSet)
+
+urlpatterns = router.urls
+

@@ -1,6 +1,7 @@
-from django.urls import path
-from . import views
+from rest_framework.routers import DefaultRouter
+from .views import RuleViewSet
 
-urlpatterns = [
-    path('', views.RuleListCreateAPIView.as_view(), name='rule-list-create'),
-]
+router = DefaultRouter()
+router.register(r'', RuleViewSet)
+
+urlpatterns = router.urls
