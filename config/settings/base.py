@@ -60,7 +60,8 @@ INSTALLED_PACKAGES = [
     'rest_framework',
     'corsheaders',
     'debug_toolbar',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
+    'drf_yasg',
 ]
 
 DJANGO_MODULES = [

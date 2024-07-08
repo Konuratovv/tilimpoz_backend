@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from .schema_urls import urlpatterns as schema_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,3 +34,5 @@ urlpatterns = [
     path('api/contacts/', include('apps.contacts.urls')),
     path('api/team/', include('apps.team.urls')),
 ]
+
+urlpatterns += schema_urls
