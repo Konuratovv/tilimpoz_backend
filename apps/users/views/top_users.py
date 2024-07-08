@@ -8,6 +8,6 @@ class TopUsersAPIView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request):
-        top_users = User.objects.order_by('-points')[:3]
+        top_users = User.objects.order_by('-points')[:50]
         serializer = TopUserSerializer(top_users, many=True)
         return Response(serializer.data)
