@@ -33,6 +33,8 @@ urlpatterns = [
     path('api/qa/', include('apps.qa.urls')),
     path('api/contacts/', include('apps.contacts.urls')),
     path('api/team/', include('apps.team.urls')),
+    path('api/videos', include('apps.videos.urls')),
+    path('api/news', include('apps.news.urls')),
 ]
 
 urlpatterns += schema_urls
