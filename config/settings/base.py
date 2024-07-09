@@ -50,6 +50,8 @@ MY_APPS = [
     'apps.faq',
     'apps.contacts',
     'apps.team',
+    'apps.videos',
+    'apps.news',
 ]
 
 JAZZMIN = [
