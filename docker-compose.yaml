@@ -1,0 +1,25 @@
+version: '3'
+services:
+  api:
+    build: .
+    command: >
+      sh -c "chmod +x run.sh && sh run.sh"
+    container_name: tilimpoz
+    ports:
+      - '8000:8000'
+    restart: always
+    volumes:
+      - static_volume:/usr/src/app/back_static
+      - media_volume:/usr/src/app/back_media
+
+  nginx:
+    container_name: tilimpoz_nginx
+    image: nginx:1.25.2-alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ../nginx/conf.dev/nginx.conf:/etc/nginx/conf.d/default.conf
+      - tilimpoz_static_volume:/opt/services/back_static
+      - tilimpoz_media_volume:/opt/services/back_media
+    networks:
+      - nginx_network

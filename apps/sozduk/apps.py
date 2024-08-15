@@ -4,3 +4,4 @@ from django.apps import AppConfig
 class SozdukConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'apps.sozduk'
+    verbose_name = 'Создук'

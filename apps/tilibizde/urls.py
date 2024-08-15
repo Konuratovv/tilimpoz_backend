@@ -1,7 +1,7 @@
-from rest_framework.routers import DefaultRouter
-from .views import TilibizdeViewSet
+from django.urls import path, include
+from . import views
 
-router = DefaultRouter()
-router.register(r'', TilibizdeViewSet)
-
-urlpatterns = router.urls
+urlpatterns = [
+    path('', views.TilibizdeCardsAPIView.as_view(), name='tilibizde-view'),
+    path('<int:pk>', views.TilibizdeDetailedAPIView.as_view(), name='tilibizde-detailed')
+]

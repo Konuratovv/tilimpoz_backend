@@ -1,7 +1,17 @@
 from rest_framework import serializers
 from .models import Tilibizde
 
-class TilibizdeSerializer(serializers.ModelSerializer):
+class TilibizdeCardSerializer(serializers.ModelSerializer):
+    
+
     class Meta:
         model = Tilibizde
-        fields = ('id', 'photo', 'title', 'category', 'description')
+        fields = ('photo', 'title', 'created_at', )
+
+
+class TilibizdeDetailedViewSerializer(serializers.ModelSerializer):
+
+
+    class Meta:
+        model = Tilibizde
+        fields = ('photo', 'title', 'description', 'created_at', )

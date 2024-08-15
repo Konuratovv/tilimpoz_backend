@@ -4,8 +4,8 @@ from django.db import models
 # Create your models here.
 
 class Faq(models.Model):
-    question = models.TextField()
-    answer = models.TextField()
+    question = models.TextField(verbose_name='Суроо')
+    answer = models.TextField(verbose_name='Жооп')
 
     def __str__(self):
         return (
@@ -14,6 +14,6 @@ class Faq(models.Model):
         )
 
     class Meta:
-        verbose_name = 'Faq'
-        verbose_name_plural = 'Faqs'
+        verbose_name = 'Эн коп берилген суроо'
+        verbose_name_plural = 'Эн коп берилген суроолор'
 
