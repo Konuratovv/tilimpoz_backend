@@ -1,11 +1,20 @@
 from django.db import models
 from django.utils import timezone
+from django_ckeditor_5.fields import CKEditor5Field
+
+
 class Rule(models.Model):
     title = models.CharField(max_length=255)
-    description = models.TextField()
+    description = CKEditor5Field()
 
     def __str__(self):
         return self.title
+    
+
+    class Meta:
+        verbose_name = 'Эреже'
+        verbose_name_plural = 'Эрежелер'
+
 
 class RuleCard(models.Model):
     title = models.CharField(max_length=255)
@@ -15,3 +24,8 @@ class RuleCard(models.Model):
 
     def __str__(self):
         return self.title
+    
+
+    class Meta:
+        verbose_name = 'Эреженин карточкасы'
+        verbose_name_plural = 'Эреженин карточкалары'

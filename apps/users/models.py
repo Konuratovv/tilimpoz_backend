@@ -7,13 +7,13 @@ from .user_manager import UserManager
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(unique=True, db_index=True)
+    email = models.EmailField(unique=True, db_index=True, verbose_name='Почтасы')
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
-    username = models.CharField(unique=True, max_length=150)
-    points = models.IntegerField(default=0)
-    code = models.CharField(max_length=9, blank=True, null=True)
+    username = models.CharField(unique=True, max_length=150, verbose_name='Никнейм')
+    points = models.IntegerField(default=0, verbose_name='Баллдар')
+    code = models.CharField(max_length=9, blank=True, null=True, verbose_name='Почтаны аныктоо учун убактылуу коду')
 
     objects = UserManager()
 
@@ -22,3 +22,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
+    
+
+    class Meta:
+        verbose_name = 'Колдонуучу'
+        verbose_name_plural = 'Колдонуучулар'

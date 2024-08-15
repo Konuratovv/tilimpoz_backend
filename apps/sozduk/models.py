@@ -8,4 +8,9 @@ class Sozduk(models.Model):
 
     def __str__(self):
         return self.word
+    
+
+    class Meta:
+        verbose_name = 'Соз'
+        verbose_name_plural = 'Создору'
 

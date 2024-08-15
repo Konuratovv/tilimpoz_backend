@@ -1,8 +1,7 @@
-from rest_framework.routers import DefaultRouter
-from .views import EtymologyViewSet
+from django.urls import path, include
+from . import views
 
-router = DefaultRouter()
-router.register(r'', EtymologyViewSet)
-
-urlpatterns = router.urls
-
+urlpatterns = [
+    path('', views.EtymologyViewSet.as_view(), name='etymology-view'),
+    path('<int:pk>', views.EtymologyDetailedAPIView.as_view(), name='etymology-detailed')
+]
