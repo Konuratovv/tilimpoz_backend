@@ -69,6 +69,7 @@ INSTALLED_PACKAGES = [
     'drf_yasg',
     'corsheaders',
     'django_ckeditor_5',
+    'django_filters',
 ]
 
 DJANGO_MODULES = [
@@ -278,4 +279,10 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8000',
+    'http://47.237.85.188:80/',
+    'http://127.0.0.1:8000/',
+]
 
