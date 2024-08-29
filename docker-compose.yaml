@@ -3,7 +3,7 @@ services:
   api:
     build: .
     command: >
-      sh -c "chmod +x run.sh && sh run.sh"
+      sh -c "chmod +x ./scripts/run_for_docker.sh && bash ./scripts/run_for_docker.sh"
     container_name: tilimpoz
     ports:
       - '8000:8000'
@@ -11,6 +11,25 @@ services:
     volumes:
       - static_volume:/usr/src/app/static
       - media_volume:/usr/src/app/media
+    depends_on:
+      - postgres
+    networks:
+      - main_network
+      - nginx_network
+      
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: tilimpoz_db
+      POSTGRES_USER: tilimpoz_user
+      POSTGRES_PASSWORD: newpass13
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    networks:
+      - main_network
 
   nginx:
     image: nginx
@@ -23,13 +42,17 @@ services:
       - media_volume:/usr/src/app/media
     depends_on:
       - api
-
-
-networks:
-  nginx_network:
-    driver: bridge
-
+    networks:
+      - nginx_network
 
 volumes:
   static_volume:
   media_volume:
+  postgres_data:
+
+networks:
+  nginx_network:
+    driver: bridge
+  main_network:
+    driver: bridge
+

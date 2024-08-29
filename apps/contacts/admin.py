@@ -10,5 +10,4 @@ class ContactAdmin(admin.ModelAdmin):
     inlines = (SocialMediaInline, )
 
 admin.site.register(Contact, ContactAdmin)
-admin.site.register(SocialMedia)
 

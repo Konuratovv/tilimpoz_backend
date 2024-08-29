@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from .models import CustomUser as User
-from .services.validators import PasswordValidator
+from .services import UserService
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -19,7 +19,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         ]
 
     def validate(self, data):
-        return PasswordValidator.confirm_password_validator(data)
+        return UserService.confirm_password_validator(data)
 
 
 class LoginSerializer(serializers.ModelSerializer):
@@ -37,3 +37,21 @@ class TopUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'points']
+
+
+class SendResetCodeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('code', )
+
+
+class CheckResetCodeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('email', 'code', )
+
+
+class ResetPasswordSerializer(serializers.Serializer):
+    new_password = serializers.CharField(max_length=100)
+    confirm_password = serializers.CharField(max_length=100)
+    email = serializers.EmailField()

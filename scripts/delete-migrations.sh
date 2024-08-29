@@ -8,4 +8,5 @@ find . -path "./venv" -prune -o -path "*/migrations/*.py" -not -name "__init__.p
 # Удаляем .pyc файлы в папках migrations, исключая venv
 find . -path "./venv" -prune -o -path "*/migrations/*.pyc" -exec rm -f {} \;
 
-echo "Миграции удалены."
+find . -name "db.sqlite3" -exec rm {} \;
+

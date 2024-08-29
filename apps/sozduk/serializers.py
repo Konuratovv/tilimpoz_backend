@@ -1,7 +1,17 @@
 from rest_framework import serializers
-from .models import Sozduk
+from .models import SozdukCategory, Sozduk
+
+from apps.categories.serializers import CategorySerializer
 
 class SozdukSerializer(serializers.ModelSerializer):
+    category = CategorySerializer(read_only=True)
+
+    class Meta:
+        model = SozdukCategory
+        fields = ('id', 'title', 'image', 'category', )
+
+class SozdorSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Sozduk
-        fields = ('id', 'category', 'word', 'translation')
+        fields = ('id', 'word', 'translation', 'image', )

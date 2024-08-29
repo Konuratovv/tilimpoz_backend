@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from .models import Rule, RuleCard
+from .models import Rule
 
 class RuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rule
-        fields = ('id', 'title', 'description')
+        fields = ('id', 'title', 'description', 'author', 'date')
 
 class RuleCardSerializer(serializers.ModelSerializer):
     class Meta:
-        model = RuleCard
-        fields = ('id', 'title', 'author', 'date', 'rule')
+        model = Rule
+        fields = ('id', 'title', 'author', 'date')

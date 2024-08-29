@@ -1,7 +1,10 @@
+from django.urls import path
+
 from rest_framework.routers import DefaultRouter
-from .views import SozdukViewSet
 
-router = DefaultRouter()
-router.register(r'', SozdukViewSet)
+from .views import SozdorListAPIView, SozdukCategoryListAPIView
 
-urlpatterns = router.urls
+urlpatterns = [
+    path('', SozdukCategoryListAPIView.as_view(), name='sozduk-category'),
+    path('sozdor/', SozdorListAPIView.as_view(), name='sozdor')
+]

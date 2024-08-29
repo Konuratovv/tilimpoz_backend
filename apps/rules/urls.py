@@ -1,8 +1,8 @@
 from rest_framework.routers import DefaultRouter
-from .views import RuleViewSet, RuleCardViewSet
+from .views import RuleListAPIView, RuleRetrieveAPIView
+from django.urls import path
 
-router = DefaultRouter()
-router.register(r'rules', RuleViewSet)
-router.register(r'rulecards', RuleCardViewSet)
-
-urlpatterns = router.urls
+urlpatterns = [
+    path('', RuleListAPIView.as_view(), name='rules'),
+    path('<int:pk>', RuleRetrieveAPIView.as_view(), name='rule-by-id')
+]

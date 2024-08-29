@@ -2,5 +2,5 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.ArticleListCreateAPIView.as_view(), name='article-list-create'),
+    path('', views.ArticleViewSet.as_view({'get': 'list'}), name='article-list-create'),
 ]
