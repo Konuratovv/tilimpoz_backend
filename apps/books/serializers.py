@@ -5,6 +5,7 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ('id', 'title')
+        ref_name = 'BookCategorySerializer'
 
 
 class BookSerializer(serializers.ModelSerializer):

@@ -18,4 +18,4 @@ class EtymologyDetailedSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Etymology
-        fields = ('image', 'title', 'description', 'photo2', 'description2' 'category', 'created_at')        
+        fields = ('photo', 'title', 'description', 'photo2', 'description2', 'category', 'created_at', )        

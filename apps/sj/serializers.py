@@ -17,4 +17,4 @@ class SabattuuJoobtorDetailedSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SabattuuModel
-        fields = ('image', 'title', 'description', 'photo2', 'description2' 'category', 'created_at')
+        fields = ('image', 'title', 'description', 'photo2', 'description2', 'category', 'created_at')

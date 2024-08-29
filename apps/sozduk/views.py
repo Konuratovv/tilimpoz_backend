@@ -17,6 +17,7 @@ class SozdukCategoryListAPIView(generics.ListAPIView):
 class SozdorListAPIView(generics.ListAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly, )
     queryset = Sozduk.objects.all()
+    serializer_class = SozdorSerializer
     
     def get(self, request, *args, **kwargs):
         category_id = self.request.data.get('category_id')
