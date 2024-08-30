@@ -40,4 +40,4 @@ class ListQuestionSerializer(serializers.ModelSerializer):
 class CreateQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ('question', )
+        fields = ('question', 'image', )

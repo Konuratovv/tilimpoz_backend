@@ -42,7 +42,7 @@ class TopUserSerializer(serializers.ModelSerializer):
 class SendResetCodeSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('code', )
+        fields = ('email', )
 
 
 class CheckResetCodeSerializer(serializers.ModelSerializer):
