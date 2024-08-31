@@ -38,7 +38,6 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 MY_APPS = [
-    'apps.article',
     'apps.users',
     'apps.rules',
     'apps.etymology',

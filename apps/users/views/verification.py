@@ -1,10 +1,12 @@
 from rest_framework.response import Response
-from rest_framework.generics import UpdateAPIView
+from rest_framework.mixins import UpdateModelMixin
+from rest_framework.generics import GenericAPIView
 
 from ..serializers import VerifyEmailSerializer
 from ..services import UserService
+from ..models import CustomUser
 
-class VerifyEmailAPIView(UpdateAPIView):
+class VerifyEmailAPIView(UpdateModelMixin, GenericAPIView):
     serializer_class = VerifyEmailSerializer
 
     def patch(self, request, *args, **kwargs):

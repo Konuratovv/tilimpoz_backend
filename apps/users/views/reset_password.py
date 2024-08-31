@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework import status
+from rest_framework import mixins
 
 from ..serializers import SendResetCodeSerializer, CheckResetCodeSerializer, ResetPasswordSerializer
 from ..services import UserService
@@ -13,7 +14,7 @@ class SendResetCodeAPIView(generics.CreateAPIView):
         return UserService.send_reset_code(email)
     
 
-class CheckResetCodeAPIView(generics.UpdateAPIView):
+class CheckResetCodeAPIView(mixins.UpdateModelMixin, generics.GenericAPIView):
     serializer_class = CheckResetCodeSerializer
 
     def patch(self, request, *args, **kwargs):
@@ -21,7 +22,7 @@ class CheckResetCodeAPIView(generics.UpdateAPIView):
         code = self.request.data.get('code')
         return UserService.check_reset_code(email, code)
     
-class ResetPasswordAPIView(generics.UpdateAPIView):
+class ResetPasswordAPIView(mixins.UpdateModelMixin, generics.GenericAPIView):
     serializer_class = ResetPasswordSerializer
 
     def patch(self, request, *args, **kwargs):

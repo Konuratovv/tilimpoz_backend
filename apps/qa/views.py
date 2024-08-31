@@ -28,4 +28,4 @@ class QuestionCreateAPIView(CreateAPIView):
             nickname=self.request.user.nickname,
         )
         question.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_200_OK)

@@ -1,7 +1,9 @@
 from rest_framework.routers import DefaultRouter
-from .views import DocumentViewSet
+from .views import DocumentListAPIView
 
-router = DefaultRouter()
-router.register(r'', DocumentViewSet)
+from django.urls import path
 
-urlpatterns = router.urls
+
+urlpatterns = [
+    path('', DocumentListAPIView.as_view(), name='documents')
+]

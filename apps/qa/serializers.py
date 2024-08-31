@@ -25,7 +25,7 @@ class ListQuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ('nickname', 'question', 'created_at', 'answers')
+        fields = ('nickname', 'question', 'image', 'created_at', 'answers')
 
     def get_answers(self, obj):
         answer = Answer.objects.filter(

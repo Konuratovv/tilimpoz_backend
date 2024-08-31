@@ -1,7 +1,7 @@
-from rest_framework.routers import DefaultRouter
-from .views import CategoryViewSet
+from django.urls import path
 
-router = DefaultRouter()
-router.register(r'', CategoryViewSet)
+from .views import main_page_articles
 
-urlpatterns = router.urls
+urlpatterns = [
+    path('main-page/', main_page_articles, name='main-page-articles'),
+]
