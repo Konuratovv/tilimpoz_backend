@@ -10,7 +10,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, db_index=True, verbose_name='Почтасы')
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    is_verified = models.BooleanField(default=False)
     username = models.CharField(unique=True, max_length=150, verbose_name='Никнейм')
     points = models.IntegerField(default=0, verbose_name='Баллдар')
     code = models.CharField(max_length=9, blank=True, null=True, verbose_name='Почтаны аныктоо учун убактылуу коду')

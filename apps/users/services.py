@@ -40,8 +40,6 @@ class UserService:
             password=serializer.validated_data['password'],
         )
 
-        cls.send_verification_mail(user_instance.email)
-
         return {'status': 'success'}
     
     @classmethod
@@ -54,10 +52,6 @@ class UserService:
 
         elif not user_instance.check_password(password):
             raise AuthenticationFailed('Incorrect password!')
-        
-        elif not user_instance.is_verified:
-            cls.send_verification_mail(user_instance.email)
-            raise AuthenticationFailed('User is not verified!')
 
         return cls.give_tokens_for_user(user_instance)
     
@@ -66,17 +60,6 @@ class UserService:
         if data.get('password') != data.get('confirm_password'):
             raise AuthenticationFailed(detail='Passwords do not match', code='password_mismatch')
         return data
-    
-    @classmethod
-    def verify_user(cls, email, verify_code):
-        user = cls.__user.filter(email=email).first()
-        if user.code == verify_code:
-            user.is_verified = True
-            user.code = None
-            user.save()
-            access, refresh = cls.give_tokens_for_user(user)
-            return Response({'access': str(access), 'refresh': str(refresh)})
-        return Response({'message': 'Код туура эмес!'}, status=status.HTTP_400_BAD_REQUEST)
     
     @classmethod
     def send_reset_code(cls, email):

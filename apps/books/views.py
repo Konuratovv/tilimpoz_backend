@@ -2,6 +2,8 @@ from urllib.parse import unquote
 
 from rest_framework import generics
 from rest_framework import permissions
+from rest_framework.response import Response
+from rest_framework import status
 
 from .models import Book, BookCategory
 from .serializers import BookSerializer, BookDetailedSerializer, CategorySerializer
@@ -13,6 +15,12 @@ class BookCategoryListApiView(generics.ListAPIView):
     serializer_class = CategorySerializer
     queryset = BookCategory.objects.all()
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+
+    def get(self, request, *args, **kwargs):
+        serialized_data = []
+        serialized_data += [{'id': 0, 'title': 'Бардыгы'}]
+        serialized_data += self.get_serializer(self.get_queryset(), many=True).data
+        return Response(serialized_data, status=status.HTTP_200_OK)
 
 
 class BookViewSet(generics.ListAPIView):

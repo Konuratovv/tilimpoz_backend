@@ -1,13 +1,5 @@
 from django.contrib import admin
-from .models import Contact, SocialMedia
+from .models import Contact
 
-class SocialMediaInline(admin.StackedInline):
-    model = SocialMedia
-    extra = 1
-
-
-class ContactAdmin(admin.ModelAdmin):
-    inlines = (SocialMediaInline, )
-
-admin.site.register(Contact, ContactAdmin)
+admin.site.register(Contact)
 
