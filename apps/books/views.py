@@ -34,5 +34,5 @@ class BookViewSet(generics.ListAPIView):
 class BookDetailedAPIView(generics.RetrieveAPIView):
     queryset = Book.objects.all()
     serializer_class = BookDetailedSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
 

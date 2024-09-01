@@ -5,7 +5,7 @@ from apps.categories.models import Category
 class SozdukCategory(models.Model):
     title = models.CharField(max_length=150, verbose_name='Аты')
     image = models.ImageField(upload_to='sozduk/category/', verbose_name='Сурот')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='sozduk', verbose_name='Категориясы')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='sozduk', verbose_name='Макаланын аты')
 
     def __str__(self) -> str:
         return f"{self.title}"
