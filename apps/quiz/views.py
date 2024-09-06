@@ -38,17 +38,17 @@ class QuestionsListAPIView(generics.ListAPIView):
         return models.Question.objects.filter(id=test_id).select_related('test')
     
 
-class RecieveAndShowPoints(generics.UpdateAPIView):
-    serializer_class = serializers.PointSerializer
+# class RecieveAndShowPoints(generics.UpdateAPIView):
+#     serializer_class = serializers.PointSerializer
 
-    def patch(self, request, *args, **kwargs):
-        points = self.request.data.get('points')
-        user = self.request.user
-        if user.is_authenticated():
-            user.points = int(points)
-            return Response({"points": points}, status=status.HTTP_200_OK)
-        else:
-            return Response({"points": points}, status=status.HTTP_200_OK)
+#     def patch(self, request, *args, **kwargs):
+#         points = self.request.data.get('points')
+#         user = self.request.user
+#         if user.is_authenticated():
+#             user.points = int(points)
+#             return Response({"points": points}, status=status.HTTP_200_OK)
+#         else:
+#             return Response({"points": points}, status=status.HTTP_200_OK)
             
 
 
