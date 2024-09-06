@@ -1,4 +1,7 @@
+from typing import Iterable
 from django.db import models
+
+from apps.categories.models import Category
 
 # Create your models here.
 
@@ -17,6 +20,7 @@ class TestCategory(models.Model):
 class Test(models.Model):
     title = models.CharField(max_length=350, verbose_name='Тесттин аталышы')
     image = models.ImageField(upload_to='test/', verbose_name='Тесттин суроту')
+    article = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Макаланын категориясы')
     category = models.ForeignKey(TestCategory, on_delete=models.CASCADE, verbose_name='Тесттин категориясы')
 
     class Meta:
@@ -29,7 +33,7 @@ class Test(models.Model):
 
 class Question(models.Model):
     question = models.TextField(verbose_name='Тесттин суроосу')
-    test = models.ForeignKey(Test, on_delete=models.CASCADE, verbose_name='Тест')
+    test = models.ForeignKey(Test, on_delete=models.CASCADE, related_name='questions', verbose_name='Тест')
 
     
     class Meta:
@@ -43,8 +47,7 @@ class Question(models.Model):
 class Answer(models.Model):
     answer = models.TextField(verbose_name='Жооп')
     is_correct = models.BooleanField(default=False, verbose_name='Туурабы?')
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, verbose_name='Жооптун суроосу')
-    test = models.ForeignKey(Test, on_delete=models.CASCADE, verbose_name='Тесттин жооптору')
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers', verbose_name='Жооптун суроосу')
 
     class Meta:
         verbose_name = 'Жооп'

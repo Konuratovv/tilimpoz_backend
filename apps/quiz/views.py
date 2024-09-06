@@ -1,28 +1,55 @@
-from django.shortcuts import render
-from .serializers import TestCategorySerializer, TestSerializer
-from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView
-from .models import TestCategory, Test
-from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import generics
 
-# Create your views here.
+from . import models
+from . import serializers
+
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 
-class CategoryListAPIView(ListAPIView):
-    queryset = TestCategory.objects.all()
-    serializer_class = TestCategorySerializer
-    permission_classes = (AllowAny, )
+class TestCategoryListAPIView(generics.ListAPIView):
+    queryset = models.TestCategory.objects.all()
+    serializer_class = serializers.TestCategorySerializer
 
 
-class TestByCategoryListAPIView(APIView):
-    def get(self, request):
-        category_id = self.request.get('category_id')
-        queryset = Test.objects.filter(category__id=category_id)
-        serializer = TestSerializer(queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+class TestListAPIView(generics.ListAPIView):
+    queryset = models.Test.objects.all().select_related('category')
+    serializer_class = serializers.TestListSerializer
 
+
+class QuestionsListAPIView(generics.ListAPIView):
+    serializer_class = serializers.QuestionsListSerializer
+
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                'test_id', 
+                openapi.IN_QUERY, 
+                description="id Теста", 
+                type=openapi.TYPE_STRING
+            )
+        ],
+        responses={200: 'OK'}
+    )
+    def get_queryset(self):
+        test_id = self.request.data.get('test_id')
+        return models.Question.objects.filter(id=test_id).select_related('test')
+    
+
+class RecieveAndShowPoints(generics.UpdateAPIView):
+    serializer_class = serializers.PointSerializer
+
+    def patch(self, request, *args, **kwargs):
+        points = self.request.data.get('points')
+        user = self.request.user
+        if user.is_authenticated():
+            user.points = int(points)
+            return Response({"points": points}, status=status.HTTP_200_OK)
+        else:
+            return Response({"points": points}, status=status.HTTP_200_OK)
+            
 
 
 

@@ -16,6 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import RedirectView
+
+
 from .schema_urls import urlpatterns as schema_urls
 
 urlpatterns = [
@@ -40,6 +43,7 @@ urlpatterns = [
             path('quiz/', include('apps.quiz.urls')),
             path('sabattuu-joobtor/', include('apps.sj.urls')),
 ])),
+    path('', RedirectView.as_view(url='/swagger/')),
 ]
 
 urlpatterns += schema_urls

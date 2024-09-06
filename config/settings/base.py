@@ -58,7 +58,7 @@ MY_APPS = [
 ]
 
 JAZZMIN = [
-    'jazzmin'
+    # 'jazzmin'
 ]
 
 INSTALLED_PACKAGES = [
@@ -69,6 +69,7 @@ INSTALLED_PACKAGES = [
     'corsheaders',
     'django_ckeditor_5',
     'django_filters',
+    'nested_admin',
 ]
 
 DJANGO_MODULES = [
@@ -277,7 +278,12 @@ EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS').lower() == 'true'
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://localhost:5173',
+]
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000/',
