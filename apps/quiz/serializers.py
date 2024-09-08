@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from . import models
 
-from apps.categories.serializers import CategorySerializer
+from ..categories.serializers import CategorySerializer
 
 class TestCategorySerializer(serializers.ModelSerializer):
     
@@ -12,15 +12,15 @@ class TestCategorySerializer(serializers.ModelSerializer):
 
 
 class TestListSerializer(serializers.ModelSerializer):
-    # questions_count = serializers.SerializerMethodField()
-    article = CategorySerializer(many=True, read_only=True)
+    questions_count = serializers.SerializerMethodField()
+    article = CategorySerializer()
 
     class Meta:
         model = models.Test
-        fields = ('id', 'title', 'image', 'article')
+        fields = ('id', 'title', 'image', 'article', 'questions_count')
 
-    # def get_questions_count(self, obj):
-    #     return obj.questions.count()
+    def get_questions_count(self, obj):
+        return obj.questions.count()
     
 
 class AnswerSeralizer(serializers.ModelSerializer):

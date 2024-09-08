@@ -17,6 +17,7 @@ from apps.sozduk.serializers import SozdukSerializer
 from apps.sj.serializers import SabattuuJoobtorListSerializer
 from apps.books.serializers import BookSerializer
 from apps.quiz.serializers import TestListSerializer
+from .services import search, get_random_articles
 
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -25,21 +26,7 @@ from drf_yasg import openapi
 
 @api_view(['GET'])
 def main_page_articles(request):
-    tilibizde = Tilibizde.objects.order_by('?')[:2]
-    etymology = Etymology.objects.order_by('?')[:2]
-    sozduk = SozdukCategory.objects.order_by('?')[:2]
-    sj = SabattuuModel.objects.order_by('?')[:2]
-    books = Book.objects.order_by('?')[:2]
-    test = Test.objects.order_by('?')[:2]
-
-    serializer_data = []
-
-    serializer_data += TilibizdeCardSerializer(tilibizde, many=True).data
-    serializer_data += EtymologySerializer(etymology, many=True).data
-    serializer_data += SozdukSerializer(sozduk, many=True).data
-    serializer_data += SabattuuJoobtorListSerializer(sj, many=True).data
-    serializer_data += BookSerializer(books, many=True).data
-    serializer_data += TestListSerializer(test, many=True).data
+    serializer_data = get_random_articles()
     return Response(serializer_data, status=status.HTTP_200_OK)
 
 
@@ -57,43 +44,13 @@ class SearchAPIView(views.APIView):
     )
     
     def get(self, request, *args, **kwargs):
-        query = self.request.query_params.get('query', None)
-        serializer_data = []
-        tilibizde = Tilibizde.objects.filter(Q(title__icontains=query) | 
-                                            Q(description__icontains=query) | 
-                                            Q(description2__icontains=query) | 
-                                            Q(category__title=query))
-        tilibizde_serializer = TilibizdeCardSerializer(tilibizde, many=True)
-        etymology = Etymology.objects.filter(Q(title__icontains=query) | 
-                                            Q(description__icontains=query) | 
-                                            Q(description2__icontains=query) | 
-                                            Q(category__title=query))
-        etymology_serializer = EtymologySerializer(etymology, many=True)
-        sabattuu = SabattuuModel.objects.filter(Q(title__icontains=query) | 
-                                                Q(description__icontains=query) | 
-                                                Q(description2__icontains=query) | 
-                                                Q(category__title=query))
-        sabattuu_serializer = SabattuuJoobtorListSerializer(sabattuu, many=True)
-        sozduk = SozdukCategory.objects.filter(Q(title__icontains=query) | 
-                                            Q(category__title=query))
-        sozduk_serializer = SozdukSerializer(sozduk, many=True)
-        book = Book.objects.filter(Q(title__icontains=query) | 
-                                Q(description__icontains=query) | 
-                                Q(book_category__title=query) |
-                                Q(category__title=query))
-        book_serializer = BookSerializer(book, many=True)
-        test = Test.objects.filter(Q(title__icontains=query) | 
-                                Q(category__title=query))
-        test_serializer = TestListSerializer(test, many=True)
+        query = request.query_params.get('query', None)
+        if query is not None:
+            serializer_data = search(query)
+            return Response(serializer_data, status=status.HTTP_200_OK)
+        else:
+            return Response([])
 
-        serializer_data += tilibizde_serializer.data
-        serializer_data += etymology_serializer.data
-        serializer_data += sabattuu_serializer.data
-        serializer_data += sozduk_serializer.data
-        serializer_data += book_serializer.data
-        serializer_data += test_serializer.data
-
-        return Response(serializer_data, status=status.HTTP_200_OK)
 
 
         

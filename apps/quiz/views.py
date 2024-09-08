@@ -15,7 +15,7 @@ class TestCategoryListAPIView(generics.ListAPIView):
 
 
 class TestListAPIView(generics.ListAPIView):
-    queryset = models.Test.objects.all().select_related('category')
+    queryset = models.Test.objects.all().select_related('article')
     serializer_class = serializers.TestListSerializer
 
 
@@ -26,7 +26,7 @@ class QuestionsListAPIView(generics.ListAPIView):
         manual_parameters=[
             openapi.Parameter(
                 'test_id', 
-                openapi.IN_QUERY, 
+                openapi.IN_BODY, 
                 description="id Теста", 
                 type=openapi.TYPE_STRING
             )
@@ -37,18 +37,6 @@ class QuestionsListAPIView(generics.ListAPIView):
         test_id = self.request.data.get('test_id')
         return models.Question.objects.filter(id=test_id).select_related('test')
     
-
-# class RecieveAndShowPoints(generics.UpdateAPIView):
-#     serializer_class = serializers.PointSerializer
-
-#     def patch(self, request, *args, **kwargs):
-#         points = self.request.data.get('points')
-#         user = self.request.user
-#         if user.is_authenticated():
-#             user.points = int(points)
-#             return Response({"points": points}, status=status.HTTP_200_OK)
-#         else:
-#             return Response({"points": points}, status=status.HTTP_200_OK)
             
 
 

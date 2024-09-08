@@ -3,6 +3,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.hashers import make_password
+from django.db.models import Q
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -92,6 +93,29 @@ class UserService:
             return "Success"
         else:
             return "Passwords did not match"
+        
+    @classmethod
+    def top_users(cls, request, serializer_class):
+        top_users = cls.__user.exclude(is_superuser=True).order_by('-points')[:50]
+        top_users_serializer = serializer_class(top_users, many=True)
+        current_user = request.user
+        if current_user.is_authenticated:
+            current_user_position =cls.__user.filter(
+            Q(points__gt=current_user.points) | 
+            Q(points=current_user.points, id__lt=current_user.id)
+        ).exclude(
+            is_superuser=True
+        ).count() + 1
+            current_user_serializer = serializer_class(current_user).data
+            current_user_serializer['position'] = current_user_position
+            response_data = {
+                "top_users": top_users_serializer.data,
+                "current_user": current_user_serializer,
+            }
+            return Response(response_data)
+        else:
+            return Response(top_users_serializer.data)
+
 
 
 

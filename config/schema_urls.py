@@ -7,7 +7,7 @@ schema_view = get_schema_view(
     openapi.Info(
         title="Tilimpoz API",
         default_version='v1',
-        description="Test description",
+        description="API документация для фронтов Тилимпоз. И кстати тесты еще не закончены <3",
         terms_of_service="https://",
         contact=openapi.Contact(email=""),
         license=openapi.License(name="MIT License"),

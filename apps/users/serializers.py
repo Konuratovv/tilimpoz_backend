@@ -20,6 +20,20 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         return UserService.confirm_password_validator(data)
+    
+    def validate_username(self, value):
+        if not value:
+            raise serializers.ValidationError("Нужно ввести ФИО")
+        
+        parts = value.split()
+        if len(parts) < 2:
+            raise serializers.ValidationError("Вам нужно ввести и имя и фамилию")
+        
+        for part in parts:
+            if not part.isalpha():
+                raise serializers.ValidationError("Ваше имя и фамилия не должны иметь ни одного символа кроме букв")
+        
+        return value            
 
 
 class LoginSerializer(serializers.ModelSerializer):
