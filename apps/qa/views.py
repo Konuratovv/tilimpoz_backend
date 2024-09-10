@@ -35,7 +35,7 @@ class QuestionCreateAPIView(CreateAPIView):
         serializer.is_valid(raise_exception=True)
         question = Question.objects.create(
             question=serializer.validated_data['question'],
-            image=serializer.validated_data['image'],
+            image=serializer.data['image'],
             nickname=self.request.user,
         )
         question.save()

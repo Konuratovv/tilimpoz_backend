@@ -1,5 +1,7 @@
+from typing import Iterable
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.hashers import make_password
 from .user_manager import UserManager
 
 
@@ -26,3 +28,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'Колдонуучу'
         verbose_name_plural = 'Колдонуучулар'
+
+    # def save(self, **kwargs):
+    #     self.password = make_password(self.password)
+    #     return super().save(**kwargs)

@@ -38,6 +38,8 @@ class ListQuestionSerializer(serializers.ModelSerializer):
 
 
 class CreateQuestionSerializer(serializers.ModelSerializer):
+    # image = serializers.ImageField(required=False)
+
     class Meta:
         model = Question
         fields = ('question', 'image', )

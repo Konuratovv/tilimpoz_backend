@@ -2,6 +2,7 @@ from typing import Iterable
 from django.db import models
 
 from apps.categories.models import Category
+from apps.users.models import CustomUser as User
 
 # Create your models here.
 
@@ -22,6 +23,7 @@ class Test(models.Model):
     image = models.ImageField(upload_to='test/', verbose_name='Тесттин суроту')
     article = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='test', verbose_name='Макаланын категориясы')
     category = models.ForeignKey(TestCategory, on_delete=models.CASCADE, verbose_name='Тесттин категориясы')
+    users = models.ManyToManyField(User, blank=True, related_name='test_passed_users',verbose_name='Каттоочулар')
 
     class Meta:
         verbose_name = 'Тест'
