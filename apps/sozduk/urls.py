@@ -6,5 +6,5 @@ from .views import SozdorListAPIView, SozdukCategoryListAPIView
 
 urlpatterns = [
     path('', SozdukCategoryListAPIView.as_view(), name='sozduk-category'),
-    path('sozdor/', SozdorListAPIView.as_view(), name='sozdor')
+    path('category/<int:category_id>/sozdor/', SozdorListAPIView.as_view(), name='sozdor')
 ]

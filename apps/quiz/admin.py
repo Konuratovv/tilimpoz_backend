@@ -1,5 +1,8 @@
 import nested_admin
+
 from django.contrib import admin
+from django.http.request import HttpRequest
+
 from .models import TestCategory, Test, Question, Answer
 
 # Register your models here.
@@ -22,8 +25,13 @@ class TestCategoryAdmin(admin.ModelAdmin):
 @admin.register(Test)
 class TestModelAdmin(nested_admin.NestedModelAdmin):
     inlines = (QuestionInline, )
+    readonly_fields = ('users', )
 
 @admin.register(Question)
 class QuestionModeAdmin(nested_admin.NestedModelAdmin):
     inlines = (AnswerInline, )
+
+    def has_add_permission(self, request: HttpRequest) -> bool:
+        return False
+
 
