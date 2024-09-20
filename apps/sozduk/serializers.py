@@ -8,7 +8,7 @@ class SozdukSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SozdukCategory
-        fields = ('id', 'title', 'image', 'category', )
+        fields = ('id', 'title', 'photo', 'category', )
 
 class SozdorSerializer(serializers.ModelSerializer):
 

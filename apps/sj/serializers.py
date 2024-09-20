@@ -9,7 +9,7 @@ class SabattuuJoobtorListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SabattuuModel
-        fields = ('title', 'image', 'category', 'created_at', )
+        fields = ('title', 'photo', 'category', 'created_at', )
 
 
 class SabattuuJoobtorDetailedSerializer(serializers.ModelSerializer):
@@ -17,4 +17,4 @@ class SabattuuJoobtorDetailedSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SabattuuModel
-        fields = ('image', 'title', 'description', 'photo2', 'description2', 'category', 'created_at')
+        fields = ('photo', 'title', 'description', 'photo2', 'description2', 'category', 'created_at')

@@ -22,7 +22,7 @@ class TestListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Test
-        fields = ('id', 'title', 'image', 'article', 'questions_count')
+        fields = ('id', 'title', 'photo', 'article', 'questions_count')
 
     def get_questions_count(self, obj):
         return obj.questions.count()
