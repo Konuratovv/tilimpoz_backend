@@ -20,7 +20,7 @@ class TestCategory(models.Model):
 
 class Test(models.Model):
     title = models.CharField(max_length=350, verbose_name='Тесттин аталышы')
-    image = models.ImageField(upload_to='test/', verbose_name='Тесттин суроту')
+    photo = models.ImageField(upload_to='test/', verbose_name='Тесттин суроту')
     article = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='test', verbose_name='Макаланын категориясы')
     category = models.ForeignKey(TestCategory, on_delete=models.CASCADE, verbose_name='Тесттин категориясы')
     users = models.ManyToManyField(User, blank=True, related_name='test_passed_users',verbose_name='Каттоочулар')

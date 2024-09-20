@@ -7,7 +7,7 @@ from apps.users.models import CustomUser as User
 class Question(models.Model):
     question = models.TextField(verbose_name='Суроо')
     nickname = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор')
-    image = models.ImageField(upload_to='questions/', blank=True, null=True, verbose_name='Сурот')
+    photo = models.ImageField(upload_to='questions/', blank=True, null=True, verbose_name='Сурот')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Тузулгон убактысы')
 
     def __str__(self):

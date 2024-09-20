@@ -29,6 +29,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'Колдонуучу'
         verbose_name_plural = 'Колдонуучулар'
 
-    # def save(self, **kwargs):
-    #     self.password = make_password(self.password)
-    #     return super().save(**kwargs)
+    def save(self, **kwargs):
+        self.password = make_password(self.password)
+        return super().save(**kwargs)

@@ -6,7 +6,7 @@ from apps.categories.models import Category
 # Create your models here.
 
 class SabattuuModel(models.Model):
-    image = models.ImageField(upload_to='sj/', verbose_name='Сурот')
+    photo = models.ImageField(upload_to='sj/', verbose_name='Сурот')
     title = models.CharField(max_length=300, verbose_name='Аты')
     description = CKEditor5Field(verbose_name='Текст')
     photo2 = models.ImageField(upload_to='sj/', verbose_name='Сурот 2')
