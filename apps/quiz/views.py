@@ -18,6 +18,12 @@ from django_filters import rest_framework as filters
 class TestCategoryListAPIView(generics.ListAPIView):
     queryset = models.TestCategory.objects.all()
     serializer_class = serializers.TestCategorySerializer
+    
+    def get(self, request, *args, **kwargs):
+        serialized_data = []
+        serialized_data.append({'id': 0, 'title': 'Бардыгы'})
+        serialized_data += self.get_serializer(self.get_queryset(), many=True).data
+        return Response(serialized_data, status=status.HTTP_200_OK)        
 
 
 class TestListAPIView(generics.ListAPIView):

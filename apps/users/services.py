@@ -14,7 +14,6 @@ from .models import CustomUser
 
 class UserService:
     __user = CustomUser.objects.all()
-    __generated_code = get_random_string(6, '0123456789')
 
     @classmethod
     def give_tokens_for_user(cls, user):
@@ -23,7 +22,7 @@ class UserService:
     @classmethod
     def send_verification_mail(cls, email):
         user = cls.__user.filter(email=email).first()
-        user.code = cls.__generated_code
+        user.code = get_random_string(6, '0123456789')
         user.save()
         subject = 'Your verification code'
         message = f'Your verification code:\n{cls.__generated_code}\nThanks for using our application.'

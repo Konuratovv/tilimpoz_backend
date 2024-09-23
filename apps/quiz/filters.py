@@ -8,3 +8,8 @@ class TestFilter(filters.FilterSet):
     class Meta:
         model = Test
         fields = ('category__title', )
+        
+    def filter_category_title(self, queryset, name, value):
+        if not value or value.lower() == 'бардыгы':
+            return queryset
+        return queryset.filter(category__title__icontains=value)

@@ -14,4 +14,4 @@ class SozdorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Sozduk
-        fields = ('id', 'word', 'translation', 'image', )
+        fields = ('id', 'word', 'translation', 'photo', )

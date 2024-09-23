@@ -10,11 +10,6 @@ class TestCategorySerializer(serializers.ModelSerializer):
         model = models.TestCategory
         fields = ('id', 'title', )
 
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        extra_data = {'id': 0, 'title': 'Бардыгы'}
-        return [extra_data] + [representation]
-
 
 class TestListSerializer(serializers.ModelSerializer):
     questions_count = serializers.SerializerMethodField()
