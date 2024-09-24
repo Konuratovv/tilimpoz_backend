@@ -1,7 +1,10 @@
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
-from ..serializers import LoginSerializer
+from rest_framework import status
+from rest_framework import exceptions
+from ..serializers import LoginSerializer, CurrentUserSerializer
 from ..services import UserService
 
 from drf_yasg import openapi
@@ -23,3 +26,16 @@ class LoginAPIView(generics.CreateAPIView):
         password = request.data.get('password')
         access_token, refresh_token = UserService.login(email, password)
         return Response({'access_token': f'{access_token}', "refresh_token": f'{refresh_token}'})
+    
+    
+class RetrieveCurrentUserAPIView(generics.RetrieveAPIView):
+    serializer_class = CurrentUserSerializer
+    permission_classes = (IsAuthenticated, )
+
+    def get(self, request, *args, **kwargs):
+        try:
+            current_user = self.request.user
+            return Response(self.get_serializer(current_user).data, status=status.HTTP_200_OK)
+        except exceptions.NotAuthenticated:
+            return Response({'message': 'You are not authenticated'}, status=status.HTTP_400_BAD_REQUEST)
+                

@@ -69,3 +69,10 @@ class ResetPasswordSerializer(serializers.Serializer):
     new_password = serializers.CharField(max_length=100)
     confirm_password = serializers.CharField(max_length=100)
     email = serializers.EmailField()
+    
+
+class CurrentUserSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = User
+        fields = ('id', 'username')

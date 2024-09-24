@@ -8,5 +8,6 @@ urlpatterns = [
     path('top-users/', top_users.TopUsersAPIView.as_view(), name='top-users'),
     path('send-reset-code/', reset_password.SendResetCodeAPIView.as_view(), name='send-reset-code'),
     path('check-reset-code/', reset_password.CheckResetCodeAPIView.as_view(), name='check-reset-code'),
-    path('reset-password/', reset_password.ResetPasswordAPIView.as_view(), name='reset-password')
+    path('reset-password/', reset_password.ResetPasswordAPIView.as_view(), name='reset-password'),
+    path('current-user/', login.RetrieveCurrentUserAPIView.as_view(), name='current-user')
 ]

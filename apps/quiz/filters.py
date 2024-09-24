@@ -2,7 +2,7 @@ from django_filters import rest_framework as filters
 from .models import Test
 
 class TestFilter(filters.FilterSet):
-    category__title = filters.CharFilter(lookup_expr='icontains')
+    category__title = filters.CharFilter(method='filter_category_title')
 
 
     class Meta:
