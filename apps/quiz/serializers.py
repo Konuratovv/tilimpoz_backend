@@ -22,6 +22,11 @@ class TestListSerializer(serializers.ModelSerializer):
     def get_questions_count(self, obj):
         return obj.questions.count()
     
+class TestTitleSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = models.Test
+        fields = ('id', 'title', )
 
 class AnswerSeralizer(serializers.ModelSerializer):
     points = serializers.SerializerMethodField()
@@ -35,15 +40,23 @@ class AnswerSeralizer(serializers.ModelSerializer):
     
 
 class QuestionsListSerializer(serializers.ModelSerializer):
+    test = TestTitleSerializer()
     answers = serializers.SerializerMethodField()
+    question_number = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Question
-        fields = ('id', 'question', 'answers')
+        fields = ('id', 'question', 'test', 'question_number', 'answers')
 
     def get_answers(self, obj):
         return AnswerSeralizer(obj.answers.all(), many=True).data
     
+    def get_question_number(self, obj):
+        request = self.context.get('request')
+        if request:
+            page_number = request.query_params.get('page', '1')
+            return page_number
+        return None
 
 class FinishTestSerializer(serializers.Serializer):
     points = serializers.CharField(max_length=100)
