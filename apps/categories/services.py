@@ -13,6 +13,8 @@ from apps.sj.serializers import SabattuuJoobtorListSerializer
 from apps.books.serializers import BookSerializer
 from apps.quiz.serializers import TestListSerializer
 
+from .models import SearchHistory
+
 
 def get_random_articles():
     tilibizde = Tilibizde.objects.order_by('?')[:2]
@@ -32,40 +34,47 @@ def get_random_articles():
     serializer_data += TestListSerializer(test, many=True).data
     return serializer_data
 
-def search(query):
-    if query is not None:
-        serializer_data = []
-        tilibizde = Tilibizde.objects.filter(Q(title__icontains=query) | 
+def search(current_user, query):
+    serializer_data = []
+    tilibizde = Tilibizde.objects.filter(Q(title__icontains=query) | 
+                                        Q(description__icontains=query) | 
+                                        Q(description2__icontains=query) | 
+                                        Q(category__title=query))
+    tilibizde_serializer = TilibizdeCardSerializer(tilibizde, many=True)
+    etymology = Etymology.objects.filter(Q(title__icontains=query) | 
+                                        Q(description__icontains=query) | 
+                                        Q(description2__icontains=query) | 
+                                        Q(category__title=query))
+    etymology_serializer = EtymologySerializer(etymology, many=True)
+    sabattuu = SabattuuModel.objects.filter(Q(title__icontains=query) | 
                                             Q(description__icontains=query) | 
                                             Q(description2__icontains=query) | 
                                             Q(category__title=query))
-        tilibizde_serializer = TilibizdeCardSerializer(tilibizde, many=True)
-        etymology = Etymology.objects.filter(Q(title__icontains=query) | 
-                                            Q(description__icontains=query) | 
-                                            Q(description2__icontains=query) | 
-                                            Q(category__title=query))
-        etymology_serializer = EtymologySerializer(etymology, many=True)
-        sabattuu = SabattuuModel.objects.filter(Q(title__icontains=query) | 
-                                                Q(description__icontains=query) | 
-                                                Q(description2__icontains=query) | 
-                                                Q(category__title=query))
-        sabattuu_serializer = SabattuuJoobtorListSerializer(sabattuu, many=True)
-        sozduk = SozdukCategory.objects.filter(Q(title__icontains=query) | 
-                                            Q(category__title=query))
-        sozduk_serializer = SozdukSerializer(sozduk, many=True)
-        book = Book.objects.filter(Q(title__icontains=query) | 
-                                Q(description__icontains=query) | 
-                                Q(book_category__title=query) |
-                                Q(category__title=query))
-        book_serializer = BookSerializer(book, many=True)
-        test = Test.objects.filter(Q(title__icontains=query) | 
-                                Q(category__title=query))
-        test_serializer = TestListSerializer(test, many=True)
+    sabattuu_serializer = SabattuuJoobtorListSerializer(sabattuu, many=True)
+    sozduk = SozdukCategory.objects.filter(Q(title__icontains=query) | 
+                                        Q(category__title=query))
+    sozduk_serializer = SozdukSerializer(sozduk, many=True)
+    book = Book.objects.filter(Q(title__icontains=query) | 
+                            Q(description__icontains=query) | 
+                            Q(book_category__title=query) |
+                            Q(category__title=query))
+    book_serializer = BookSerializer(book, many=True)
+    test = Test.objects.filter(Q(title__icontains=query) | 
+                            Q(category__title=query))
+    test_serializer = TestListSerializer(test, many=True)
 
-        serializer_data += tilibizde_serializer.data
-        serializer_data += etymology_serializer.data
-        serializer_data += sabattuu_serializer.data
-        serializer_data += sozduk_serializer.data
-        serializer_data += book_serializer.data
-        serializer_data += test_serializer.data
-        return serializer_data
+    serializer_data += tilibizde_serializer.data
+    serializer_data += etymology_serializer.data
+    serializer_data += sabattuu_serializer.data
+    serializer_data += sozduk_serializer.data
+    serializer_data += book_serializer.data
+    serializer_data += test_serializer.data
+    
+    if not current_user.is_anonymous and query is not None:
+        search_history = SearchHistory.objects.create(
+            query=query,
+            users=current_user
+        )
+        search_history.save()
+        
+    return serializer_data

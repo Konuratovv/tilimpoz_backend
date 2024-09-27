@@ -1,23 +1,13 @@
-from django.db.models import Q
-
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import views
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 
-from apps.tilibizde.models import Tilibizde
-from apps.etymology.models import Etymology
-from apps.sozduk.models import SozdukCategory
-from apps.sj.models import SabattuuModel
-from apps.books.models import Book
-from apps.quiz.models import Test
-from apps.tilibizde.serializers import TilibizdeCardSerializer
-from apps.etymology.serializers import EtymologySerializer
-from apps.sozduk.serializers import SozdukSerializer
-from apps.sj.serializers import SabattuuJoobtorListSerializer
-from apps.books.serializers import BookSerializer
-from apps.quiz.serializers import TestListSerializer
 from .services import search, get_random_articles
+from . import serializers
+from . import models
 
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -44,14 +34,23 @@ class SearchAPIView(views.APIView):
     )
     
     def get(self, request, *args, **kwargs):
+        current_user = self.request.user
         query = request.query_params.get('query', None)
         if query is not None:
-            serializer_data = search(query)
+            serializer_data = search(current_user, query)
             return Response(serializer_data, status=status.HTTP_200_OK)
         else:
             return Response([])
+        
 
-
+class SearchHistoryListAPIView(generics.ListAPIView):
+    serializer_class = serializers.SearchHistorySerializer
+    permission_classes = (IsAuthenticated, )
+    
+    def get_queryset(self):
+        return models.SearchHistory.objects.filter(
+            users=self.request.user
+        )
 
         
 
