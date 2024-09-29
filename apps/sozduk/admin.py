@@ -1,10 +1,12 @@
 from django.contrib import admin
 from .models import Sozduk, SozdukCategory
 
-class SozInline(admin.StackedInline):
+from unfold.admin import StackedInline, ModelAdmin
+
+class SozInline(StackedInline):
     model = Sozduk
     extra = 1
 
 @admin.register(SozdukCategory)
-class SoadukCategoryAdmin(admin.ModelAdmin):
+class SoadukCategoryAdmin(ModelAdmin):
     inlines = (SozInline, )

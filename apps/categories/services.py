@@ -16,7 +16,7 @@ from apps.quiz.serializers import TestListSerializer
 from .models import SearchHistory
 
 
-def get_random_articles():
+def get_random_articles(request):
     tilibizde = Tilibizde.objects.order_by('?')[:2]
     etymology = Etymology.objects.order_by('?')[:2]
     sozduk = SozdukCategory.objects.order_by('?')[:2]
@@ -32,35 +32,55 @@ def get_random_articles():
     serializer_data += SabattuuJoobtorListSerializer(sj, many=True).data
     serializer_data += BookSerializer(books, many=True).data
     serializer_data += TestListSerializer(test, many=True).data
+    
+    for item in serializer_data:
+        if 'photo' in item:
+            item['photo'] = request.build_absolute_uri(item['photo'])
+            
+        if 'file' in item:
+            item['file'] = request.build_absolute_uri(item['file'])
+            
     return serializer_data
-
+    
 def search(current_user, query):
     serializer_data = []
     tilibizde = Tilibizde.objects.filter(Q(title__icontains=query) | 
                                         Q(description__icontains=query) | 
                                         Q(description2__icontains=query) | 
-                                        Q(category__title=query))
+                                        Q(category__title=query)).select_related(
+                                            'category'
+                                        )
     tilibizde_serializer = TilibizdeCardSerializer(tilibizde, many=True)
     etymology = Etymology.objects.filter(Q(title__icontains=query) | 
                                         Q(description__icontains=query) | 
                                         Q(description2__icontains=query) | 
-                                        Q(category__title=query))
+                                        Q(category__title=query)).select_related(
+                                            'category'
+                                        )
     etymology_serializer = EtymologySerializer(etymology, many=True)
     sabattuu = SabattuuModel.objects.filter(Q(title__icontains=query) | 
                                             Q(description__icontains=query) | 
                                             Q(description2__icontains=query) | 
-                                            Q(category__title=query))
+                                            Q(category__title=query)).select_related(
+                                                'category'
+                                            )
     sabattuu_serializer = SabattuuJoobtorListSerializer(sabattuu, many=True)
     sozduk = SozdukCategory.objects.filter(Q(title__icontains=query) | 
-                                        Q(category__title=query))
+                                        Q(category__title=query)).select_related(
+                                            'category'
+                                        )
     sozduk_serializer = SozdukSerializer(sozduk, many=True)
     book = Book.objects.filter(Q(title__icontains=query) | 
                             Q(description__icontains=query) | 
                             Q(book_category__title=query) |
-                            Q(category__title=query))
+                            Q(category__title=query)).select_related(
+                                'category'
+                            )
     book_serializer = BookSerializer(book, many=True)
     test = Test.objects.filter(Q(title__icontains=query) | 
-                            Q(category__title=query))
+                            Q(category__title=query)).select_related(
+                                'category'
+                            )
     test_serializer = TestListSerializer(test, many=True)
 
     serializer_data += tilibizde_serializer.data

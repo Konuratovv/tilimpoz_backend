@@ -12,4 +12,4 @@ class SearchHistorySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = SearchHistory
-        fields = ('query', )
+        fields = ('id', 'query', )

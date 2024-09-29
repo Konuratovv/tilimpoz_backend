@@ -5,9 +5,9 @@ from apps.categories.models import Category
 class Etymology(models.Model):
     photo = models.ImageField(upload_to='etymology/', verbose_name='Сурот')
     title = models.CharField(max_length=255, verbose_name='Аты')
-    description = CKEditor5Field(verbose_name='Текст')
+    description = models.TextField(verbose_name='Текст')
     photo2 = models.ImageField(upload_to='etymology/', verbose_name='Сурот 2')
-    description2 = CKEditor5Field(verbose_name='Текст 2')
+    description2 = models.TextField(verbose_name='Текст 2')
     category = models.ForeignKey(Category, related_name='etymology', on_delete=models.CASCADE, verbose_name='Макаланын категориясы')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Тузулгон убактысы')
 

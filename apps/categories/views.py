@@ -14,10 +14,17 @@ from drf_yasg import openapi
 
 
 
-@api_view(['GET'])
-def main_page_articles(request):
-    serializer_data = get_random_articles()
-    return Response(serializer_data, status=status.HTTP_200_OK)
+class MainPageAPIVIew(generics.ListAPIView):
+    
+    def get_queryset(self):
+        return None
+    
+    def get_serializer_class(self):
+        return None
+    
+    def get(self, request):
+        serializer_data = get_random_articles(request)
+        return Response(serializer_data, status=status.HTTP_200_OK)
 
 
 class SearchAPIView(views.APIView):
@@ -50,8 +57,24 @@ class SearchHistoryListAPIView(generics.ListAPIView):
     def get_queryset(self):
         return models.SearchHistory.objects.filter(
             users=self.request.user
-        )
+        ).select_related('user').values('query')[:5]
+        
 
+class DeleteSearchHistoryAPIView(generics.DestroyAPIView):
+    serializer_class = serializers.SearchHistorySerializer
+    queryset = models.SearchHistory.objects.all()
+    permission_classes = (IsAuthenticated, )
+    
+    def delete(self, request, *args, **kwargs):
+        current_user = self.request.user
+        if not current_user.is_anonymous:
+            search_history = models.SearchHistory.objects.filter(
+                users=current_user
+            )
+            search_history.delete()
+            return Response({'message': 'Successfully deleted!'}, status=status.HTTP_200_OK)
+        return Response({'message': 'Not authorized'}, status=status.HTTP_400_BAD_REQUEST)
+            
         
 
 

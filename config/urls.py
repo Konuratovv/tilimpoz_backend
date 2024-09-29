@@ -38,7 +38,6 @@ urlpatterns = [
             path('qa/', include('apps.qa.urls')),
             path('contacts/', include('apps.contacts.urls')),
             path('team/', include('apps.team.urls')),
-            path('videos/', include('apps.videos.urls')),
             path('news/', include('apps.news.urls')),
             path('quiz/', include('apps.quiz.urls')),
             path('sabattuu-joobtor/', include('apps.sj.urls')),

@@ -8,9 +8,9 @@ from apps.categories.models import Category
 class SabattuuModel(models.Model):
     photo = models.ImageField(upload_to='sj/', verbose_name='Сурот')
     title = models.CharField(max_length=300, verbose_name='Аты')
-    description = CKEditor5Field(verbose_name='Текст')
+    description = models.TextField(verbose_name='Текст')
     photo2 = models.ImageField(upload_to='sj/', verbose_name='Сурот 2')
-    description2 = CKEditor5Field(verbose_name='Текст 2')
+    description2 = models.TextField(verbose_name='Текст 2')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='sj', verbose_name='Макаланын аты')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Тузулгон убактысы')
 

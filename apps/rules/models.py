@@ -7,7 +7,7 @@ from apps.users.models import CustomUser
 class Rule(models.Model):
     title = models.CharField(max_length=255, verbose_name='Аты')
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='rule', verbose_name='Автор')
-    description = CKEditor5Field(verbose_name='Текст')
+    description = models.TextField(verbose_name='Текст')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Тузулгон датасы')
 
     def __str__(self):
