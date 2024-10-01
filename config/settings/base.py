@@ -150,6 +150,11 @@ CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.j
 UNFOLD = {
     "SITE_TITLE": "",
     "SITE_HEADER": "Тилимпоз башкармасы",
+    "SITE_SYMBOL": "speed",
+    "SITE_LOGO": {
+        "light": lambda request: static("tilimpoz.png"),  # light mode
+        "dark": lambda request: static("tilimpoz.png"),  # dark mode
+    },
     "COLORS": {
         "font": {
             "subtle-light": "77 90 110",

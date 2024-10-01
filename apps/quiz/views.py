@@ -62,7 +62,10 @@ class FinishTestAPIView(APIView):
         user = self.request.user
 
         message = TestService.finish_test(user, points, test)
-
+        
+        if 'photo' in message:
+            message['photo'] = self.request.build_absolute_uri(message['photo'])
+        
         return Response(message, status=status.HTTP_200_OK)
 
 

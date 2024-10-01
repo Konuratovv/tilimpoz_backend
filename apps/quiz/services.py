@@ -10,6 +10,10 @@ class TestService:
             user.points = points
             test.users.add(user)
             user.save()
-            return {"points": f"{points}/{test.questions.count()}"}
-        else:
-            return {"points": f"{points}/{test.questions.count()}"}
+            
+        serialized_data = {
+            "title": f"{test.title}",
+            "photo": f"{test.photo}",
+            "points": f"{points}/{test.questions.count()}",
+        }
+        return serialized_data
