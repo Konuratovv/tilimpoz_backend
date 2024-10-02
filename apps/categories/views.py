@@ -57,7 +57,7 @@ class SearchHistoryListAPIView(generics.ListAPIView):
     def get_queryset(self):
         return models.SearchHistory.objects.filter(
             users=self.request.user
-        ).select_related('user').values('query')[:5]
+        )[:5]
         
 
 class DeleteSearchHistoryAPIView(generics.DestroyAPIView):

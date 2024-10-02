@@ -32,7 +32,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG').lower() == 'true'
 if DEBUG:
-    from .db_dev import *
+    from .db_prod import *
 else:
     from .db_prod import *
 

@@ -47,40 +47,34 @@ def search(current_user, query):
     tilibizde = Tilibizde.objects.filter(Q(title__icontains=query) | 
                                         Q(description__icontains=query) | 
                                         Q(description2__icontains=query) | 
-                                        Q(category__title=query)).select_related(
-                                            'category'
-                                        )
+                                        Q(category__title=query))
+    
     tilibizde_serializer = TilibizdeCardSerializer(tilibizde, many=True)
     etymology = Etymology.objects.filter(Q(title__icontains=query) | 
                                         Q(description__icontains=query) | 
                                         Q(description2__icontains=query) | 
-                                        Q(category__title=query)).select_related(
-                                            'category'
-                                        )
+                                        Q(category__title=query))
+    
     etymology_serializer = EtymologySerializer(etymology, many=True)
     sabattuu = SabattuuModel.objects.filter(Q(title__icontains=query) | 
                                             Q(description__icontains=query) | 
                                             Q(description2__icontains=query) | 
-                                            Q(category__title=query)).select_related(
-                                                'category'
-                                            )
+                                            Q(category__title=query))
+    
     sabattuu_serializer = SabattuuJoobtorListSerializer(sabattuu, many=True)
     sozduk = SozdukCategory.objects.filter(Q(title__icontains=query) | 
-                                        Q(category__title=query)).select_related(
-                                            'category'
-                                        )
+                                        Q(category__title=query))
+    
     sozduk_serializer = SozdukSerializer(sozduk, many=True)
     book = Book.objects.filter(Q(title__icontains=query) | 
                             Q(description__icontains=query) | 
                             Q(book_category__title=query) |
-                            Q(category__title=query)).select_related(
-                                'category'
-                            )
+                            Q(category__title=query))
+    
     book_serializer = BookSerializer(book, many=True)
     test = Test.objects.filter(Q(title__icontains=query) | 
-                            Q(category__title=query)).select_related(
-                                'category'
-                            )
+                            Q(category__title=query))
+    
     test_serializer = TestListSerializer(test, many=True)
 
     serializer_data += tilibizde_serializer.data
