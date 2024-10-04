@@ -76,3 +76,6 @@ class CurrentUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username')
+        
+class LogOutSerializer(serializers.Serializer):
+    refresh_token = serializers.CharField()

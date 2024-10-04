@@ -56,6 +56,19 @@ class UserService:
         return cls.give_tokens_for_user(user_instance)
     
     @classmethod
+    def logout(cls, refresh_token):
+        if refresh_token is None:
+            raise AuthenticationFailed('Refresh token is not provided!')
+        
+        try:
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+        except Exception as e:
+            raise AuthenticationFailed('Token is invalid or expired!')
+        
+        return {'status': 'Logged out successfuly!'}
+    
+    @classmethod
     def confirm_password_validator(cls, data):
         if data.get('password') != data.get('confirm_password'):
             raise AuthenticationFailed(detail='Passwords do not match', code='password_mismatch')

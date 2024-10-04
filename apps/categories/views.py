@@ -57,23 +57,21 @@ class SearchHistoryListAPIView(generics.ListAPIView):
     def get_queryset(self):
         return models.SearchHistory.objects.filter(
             users=self.request.user
-        )[:5]
+        ).order_by('-id')[:5]
         
 
 class DeleteSearchHistoryAPIView(generics.DestroyAPIView):
     serializer_class = serializers.SearchHistorySerializer
-    queryset = models.SearchHistory.objects.all()
     permission_classes = (IsAuthenticated, )
+    lookup_field = 'query_id'
     
     def delete(self, request, *args, **kwargs):
-        current_user = self.request.user
-        if not current_user.is_anonymous:
-            search_history = models.SearchHistory.objects.filter(
-                users=current_user
-            )
+        current_user = request.user
+        search_history = models.SearchHistory.objects.filter(users=current_user, id=self.kwargs['query_id'])
+        if search_history.exists():
             search_history.delete()
             return Response({'message': 'Successfully deleted!'}, status=status.HTTP_200_OK)
-        return Response({'message': 'Not authorized'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message': 'No search history found.'}, status=status.HTTP_404_NOT_FOUND)
             
         
 

@@ -32,7 +32,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG').lower() == 'true'
 if DEBUG:
-    from .db_prod import *
+    from .db_dev import *
 else:
     from .db_prod import *
 
@@ -70,6 +70,7 @@ INSTALLED_PACKAGES = [
     'rest_framework',
     'debug_toolbar',
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'drf_yasg',
     'corsheaders',
     'django_ckeditor_5',
@@ -132,6 +133,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 # STATIC_ROOT = BASE_DIR / 'static'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [BASE_DIR / 'local_static']
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -153,8 +155,8 @@ UNFOLD = {
     "SITE_HEADER": "Тилимпоз башкармасы",
     "SITE_SYMBOL": "speed",
     "SITE_LOGO": {
-        "light": lambda request: static("tilimpoz.png"),  # light mode
-        "dark": lambda request: static("tilimpoz.png"),  # dark mode
+        "light": lambda request: static("tilimpoz_light.svg"),  # light mode
+        "dark": lambda request: static("tilimpoz_dark.svg"),  # dark mode
     },
     "COLORS": {
         "font": {

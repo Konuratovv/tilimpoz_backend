@@ -13,7 +13,7 @@ class TestService:
             
         serialized_data = {
             "title": f"{test.title}",
-            "photo": f"{test.photo}",
+            "photo": f"{test.photo.url}",
             "points": f"{points}/{test.questions.count()}",
         }
         return serialized_data
