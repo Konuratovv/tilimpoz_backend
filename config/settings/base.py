@@ -59,6 +59,7 @@ MY_APPS = [
     'apps.sj',
     'apps.tuurajaz',
     'apps.videos',
+    'apps.partners',
 ]
 
 ADMIN_THEME = [

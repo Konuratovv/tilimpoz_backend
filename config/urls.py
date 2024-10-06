@@ -44,6 +44,7 @@ urlpatterns = [
             path('sabattuu-joobtor/', include('apps.sj.urls')),
             path('tuura-jaz/', include('apps.tuurajaz.urls')),
             path('videos/', include('apps.videos.urls')),
+            path('partners/', include('apps.partners.urls')),
 ])),
     path('', RedirectView.as_view(url='/swagger/')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

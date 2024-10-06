@@ -11,8 +11,8 @@ from .models import TestCategory, Test, Question, Answer
 
 class AnswerInline(nested_admin.NestedStackedInline, StackedInline):
     model = Answer
-    extra = 4
-    max_num = 4
+    extra = 3
+    max_num = 3
 
 class QuestionInline(nested_admin.NestedStackedInline, StackedInline):
     model = Question

@@ -9,9 +9,15 @@ class SozdukSerializer(serializers.ModelSerializer):
     class Meta:
         model = SozdukCategory
         fields = ('id', 'title', 'photo', 'category', )
+        
+class SozdukForSozdorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SozdukCategory
+        fields = ('id', 'title')
 
 class SozdorSerializer(serializers.ModelSerializer):
+    category = SozdukForSozdorSerializer()
 
     class Meta:
         model = Sozduk
-        fields = ('id', 'word', 'translation', 'photo', )
+        fields = ('id', 'word', 'translation', 'photo', 'category')

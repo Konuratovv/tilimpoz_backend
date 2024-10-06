@@ -36,14 +36,14 @@ class QuestionCreateAPIView(CreateAPIView):
         
         question = Question.objects.create(
             question=serializer.validated_data['question'],
-            photo=serializer.validated_data['photo'],
+            image=serializer.validated_data['image'],
             nickname=self.request.user,
         )
         question.save()
         
         serialized_data = CreateQuestionSerializer(question).data
         
-        if 'photo' in serialized_data:
-            serialized_data['photo'] = self.request.build_absolute_uri(serialized_data['photo'])
+        if 'iamge' in serialized_data:
+            serialized_data['image'] = self.request.build_absolute_uri(serialized_data['image'])
                 
         return Response(serialized_data, status=status.HTTP_201_CREATED)
